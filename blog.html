@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="blog.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+</head>
+<body>
+    <h1>Blog</h1>
+    <div class="wrapper">
+        <div class="container">
+            <input type="radio" name="slide" id="c1" checked>
+            <label for="c1" class="card">
+                <div class="row">
+                    <div class="icon">1</div>
+                    <button onclick="incrementCounter(1)"><img width="40px" height="40px" src="https://img.freepik.com/premium-photo/pretty-cute-heart-illustration-with-isolated-background_742252-4548.jpg" alt="teh"></button>
+                    <div class="description">
+                        <h4>Blog 1</h4>
+                        <p>This is blog 1</p>
+                        <span id="counter1">0</span>
+                       
+                    </div>
+                </div>
+                <span id="counter1">0</span>
+                <div class style="position: relative;" id="comments1"></div>
+            </label>
+            <input type="radio" name="slide" id="c2" >
+            <label for="c2" class="card">
+                <div class="row">
+                    <div class="icon">2</div>
+                    <button onclick="incrementCounter(2)"><img width="40px" height="40px" src="https://img.freepik.com/premium-photo/pretty-cute-heart-illustration-with-isolated-background_742252-4548.jpg" alt="teh"></button>
+                    <div class="description">
+                        <h4>Blog 2</h4>
+                        <p>This is blog 2</p>
+                        <span id="counter2">0</span>
+                        <div id="comments2"></div>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+    <div class="comment-section">
+        <h2>Comment Section</h2>
+        <form id="commentForm" onsubmit="submitComment(event)">
+            <label for="comment">Your Comment:</label>
+            <textarea id="comment" name="comment" rows="4" cols="50"></textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <ul>
+        <li>
+          <a class="list-item" href="./index.html">
+            <i class="icon-reorder"></i>
+            <p style="display:inline">Home</p>
+          </a>
+        </li>
+        <li>
+            <a class="list-item" href="./slide.html">
+              <i class="icon-reorder"></i>
+              <p style="display:inline">Slide</p>
+            </a>
+        </li>
+        <li>
+            <a class="list-item" href="./loading.html">
+              <i class="icon-reorder"></i>
+              <p style="display:inline">IHNI</p>
+            </a>
+        </li>
+        <li>
+            <a class="list-item" href="./blog.html">
+              <i class="icon-reorder"></i>
+              <p style="display:inline">Blog</p>
+            </a>
+        </li>
+        <li>
+            <a class="list-item" href="./contact.html">
+              <i class="icon-reorder"></i>
+              <p style="display:inline">Links</p>
+            </a>
+        </li>
+    </ul>
+
+<script>
+    // Counter variables
+    let counter1 = 0;
+    let counter2 = 0;
+
+    // Function to increment the counter for each blog post
+    function incrementCounter(blogNumber) {
+        if (blogNumber === 1) {
+            counter1++;
+            document.getElementById("counter1").innerText = counter1;
+        } else if (blogNumber === 2) {
+            counter2++;
+            document.getElementById("counter2").innerText = counter2;
+        }
+    }
+
+    // Function to submit comment
+    function submitComment(event) {
+        event.preventDefault();
+        const comment = document.getElementById('comment').value;
+        const selectedBlog = document.querySelector('input[name="slide"]:checked').id;
+
+        // Store comment in local storage
+        let comments = JSON.parse(localStorage.getItem(selectedBlog)) || [];
+        comments.push(comment);
+        localStorage.setItem(selectedBlog, JSON.stringify(comments));
+
+        // Display the comments
+        displayComments(selectedBlog);
+
+        // Clear textarea
+        document.getElementById('comment').value = '';
+
+        // Display a message or perform any other action
+        alert('Comment submitted successfully!');
+    }
+
+    // Function to display comments for a specific blog
+    function displayComments(blogId) {
+        const commentsContainer = document.getElementById(`comments${blogId.charAt(blogId.length-1)}`);
+        const comments = JSON.parse(localStorage.getItem(blogId)) || [];
+        commentsContainer.innerHTML = '';
+        comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.textContent = comment;
+            commentsContainer.appendChild(commentElement);
+        });
+    }
+
+    // Display comments on page load
+    displayComments('c1');
+    displayComments('c2');
+</script>
+</body>
+</html>
