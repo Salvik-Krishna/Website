@@ -165,14 +165,6 @@
     background-color: #202020;
     color: #fff;
 }
-
-.dark-mode .list-item {
-    background-color: #fff;
-    color: #000;
-}
-
-.dark-mode .list-item:hover {
-    background: #ff6e42;
     color: #fffcfb;
 }
 
