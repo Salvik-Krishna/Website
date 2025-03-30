@@ -1,6 +1,32 @@
 'use strict';
 
-
+document.addEventListener('DOMContentLoaded', function() {
+  // Select all navbar links
+  const navbarLinks = document.querySelectorAll('.navbar-link');
+  const pages = document.querySelectorAll('[data-page]');
+  
+  // Add click event listener to each navbar link
+  navbarLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      // Remove active class from all links
+      navbarLinks.forEach(l => l.classList.remove('active'));
+      
+      // Add active class to the clicked link
+      this.classList.add('active');
+      
+      // Get the page to show based on the button text
+      const pageToShow = this.textContent.trim().toLowerCase();
+      
+      // Hide all pages
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show the selected page
+      document.querySelector(`[data-page="${pageToShow}"]`).classList.add('active');
+    });
+  });
+});
 
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
